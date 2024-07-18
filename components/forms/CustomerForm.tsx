@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import CustomFormField from "../CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { useState } from "react"
-import { UserFomrValidation } from "@/lib/validation"
+import { UserFormValidation } from "@/lib/validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/customer.actions"
 
@@ -30,8 +30,8 @@ const CustomerForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof UserFomrValidation>>({
-    resolver: zodResolver(UserFomrValidation),
+  const form = useForm<z.infer<typeof UserFormValidation>>({
+    resolver: zodResolver(UserFormValidation),
     defaultValues: {
       name: "",
       email: "",
@@ -40,25 +40,27 @@ const CustomerForm = () => {
   })
  
   
-  async function onSubmit({ name, email, phone }: z.infer<typeof UserFomrValidation>) {
+  const onSubmit = async ({ name, email, phone }: z.infer<typeof UserFormValidation>) => {
     setIsLoading(true);
 
     try {
-      const userData = {
+      const user = {
       name,
       email,
       phone   
       };
 
-      const user = await createUser(userData);
+      const newUser = await createUser(user);
      
-      if(user) {
-        router.push(`/customer/${user.$id}/register`)
+      
+      if(newUser) {
+        router.push(`/customers/${newUser.$id}/register`)
       }
     } catch(error) {
       console.log(error)
     }
-  }
+    setIsLoading(false)
+  };
 
 
   return (
