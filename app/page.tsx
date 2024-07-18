@@ -18,7 +18,7 @@ export default function Home() {
       </div>
     </section>
 
-    <Image  src="/assets/images/student1.jpg" alt="student" width={1000} height={1000}
+    <Image  src="/assets/images/student1.png" alt="student" width={1000} height={500}
      className="side-img maw-w-[50%]"/>
    </div>
   );

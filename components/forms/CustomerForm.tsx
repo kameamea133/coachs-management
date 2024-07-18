@@ -11,6 +11,7 @@ import SubmitButton from "../SubmitButton"
 import { useState } from "react"
 import { UserFomrValidation } from "@/lib/validation"
 import { useRouter } from "next/navigation"
+import { createUser } from "@/lib/actions/customer.actions"
 
 
 export enum FormFieldType {
@@ -25,6 +26,7 @@ export enum FormFieldType {
  
  
 const CustomerForm = () => {
+  
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
@@ -42,17 +44,17 @@ const CustomerForm = () => {
     setIsLoading(true);
 
     try {
-      // const userData = {
-      // name,
-      // email,
-      // phone   
-      // };
+      const userData = {
+      name,
+      email,
+      phone   
+      };
 
-      // const user = await createUser(userData);
-
-      // if(user) {
-      //   router.push(`/customer/${user.id}/register`)
-      // }
+      const user = await createUser(userData);
+     
+      if(user) {
+        router.push(`/customer/${user.$id}/register`)
+      }
     } catch(error) {
       console.log(error)
     }
